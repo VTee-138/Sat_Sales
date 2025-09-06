@@ -16,7 +16,7 @@ module.exports = {
     return pool.query(
       `UPDATE sales_data
          SET ngay        = NOW() + INTERVAL '7 hours',
-             page        = 'Bee2T',
+             page        = '10 Education SAT',
              ho_va_ten   = $1,
              tinh_trang  = 'Đang tư vấn',
              tu_nhien_ads= 'Tự nhiên'
@@ -39,6 +39,14 @@ module.exports = {
          SET tinh_trang = $1
        WHERE psid = $2`,
       [status, psid]
+    );
+  },
+  async updatePhoneNumber(psid, phoneNumber) {
+    return pool.query(
+      `UPDATE sales_data
+         SET sdt = $1
+       WHERE psid = $2`,
+      [phoneNumber, psid]
     );
   }
 };

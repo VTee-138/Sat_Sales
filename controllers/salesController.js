@@ -132,9 +132,38 @@ async function handleMessengerWebhook(msg, res) {
       console.log(`ℹ️ Customer ${psid} already exists`);
     }
     
+    // Kiểm tra tin nhắn có chứa số điện thoại không
+    const messageText = msg.message?.text;
+    if (messageText) {
+      const phoneNumber = extractPhoneNumber(messageText);
+      if (phoneNumber) {
+        await customerAds.updatePhoneNumber(psid, phoneNumber);
+        console.log(`📱 Updated phone number for PSID ${psid}: ${phoneNumber}`);
+      }
+    }
+    
     return res.sendStatus(200);
   } catch (err) {
     console.error('❌ Messenger webhook error:', err);
     return res.sendStatus(500);
+  }
+}
+
+// Hàm tách số điện thoại từ text (bắt đầu bằng 0 và có 10 ký tự)
+function extractPhoneNumber(text) {
+  try {
+    // Regex pattern: bắt đầu bằng 0, theo sau là 9 chữ số (tổng cộng 10 số)
+    const phonePattern = /\b0\d{9}\b/g;
+    const matches = text.match(phonePattern);
+    
+    if (matches && matches.length > 0) {
+      // Trả về số điện thoại đầu tiên tìm thấy
+      return matches[0];
+    }
+    
+    return null;
+  } catch (err) {
+    console.error('❌ Error extracting phone number:', err);
+    return null;
   }
 }
