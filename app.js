@@ -1,17 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const messengerRoutes = require('./routes/messengerRoutes');
-const adsCountRoutes = require('./routes/adsCountRoutes');
-const tagRoutes       = require('./routes/tagRoutes');
-const scheduler       = require('./services/scheduler');
+const salesRoutes = require('./routes/salesRoutes');
+const scheduler = require('./services/scheduler');
 
 const app = express();
 app.use(bodyParser.json());
 
-app.use('/messages', messengerRoutes);
-app.use('/ads_count', adsCountRoutes);
-app.use('/tag', tagRoutes);
+// Unified sales route - thay thế 3 routes cũ
+app.use('/sales', salesRoutes);
 
 // Start scheduler
 scheduler.start();

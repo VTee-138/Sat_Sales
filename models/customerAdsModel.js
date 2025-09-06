@@ -33,14 +33,6 @@ module.exports = {
       [adImage, adTitle, psid]
     );
   },
-  async updateTag(psid, tag) {
-    return pool.query(
-      `UPDATE sales_data
-         SET nguoi_tiep_nhan = $1
-       WHERE psid = $2`,
-      [tag, psid]
-    );
-  },
   async updateStatus(psid, status) {
     return pool.query(
       `UPDATE sales_data
