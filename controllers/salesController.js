@@ -71,6 +71,9 @@ async function handleTagWebhook(changeValue, res) {
     if (statusTags[tagNormalized]) {
       await customerAds.updateStatus(psid, statusTags[tagNormalized]);
       console.log(`✅ Updated status for PSID ${psid}: ${tag.trim()} -> ${statusTags[tagNormalized]}`);
+    } else if (tagNormalized === 'new customer') {
+      await customerAds.updateNewCustomer(psid);
+      console.log(`✅ Marked PSID ${psid} as a new customer`);
     } else {
       console.log(`ℹ️ Tag "${tag}" không được xử lý`);
     }

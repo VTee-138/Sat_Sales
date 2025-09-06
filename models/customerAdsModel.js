@@ -48,5 +48,13 @@ module.exports = {
        WHERE psid = $2`,
       [phoneNumber, psid]
     );
+  },
+  async updateNewCustomer(psid) {
+    return pool.query(
+      `UPDATE sales_data
+         SET new = TRUE
+       WHERE psid = $1`,
+      [psid]
+    );
   }
 };
